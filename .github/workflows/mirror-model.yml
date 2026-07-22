@@ -1,0 +1,15 @@
+name: Mirror model
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download temporary model
+        run: curl -L --fail --retry 3 -o ggml-base-q5_1.bin 'https://backend.composio.dev/api/v3/sl/uv9A98sPYf'
+      - name: Create public release asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create model-transfer ggml-base-q5_1.bin --title 'Temporary model transfer' --notes 'Temporary service file; repository will be deleted after processing.' || gh release upload model-transfer ggml-base-q5_1.bin --clobber
