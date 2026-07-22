@@ -12,4 +12,4 @@ jobs:
       - name: Create public release asset
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create model-transfer ggml-base-q5_1.bin --title 'Temporary model transfer' --notes 'Temporary service file; repository will be deleted after processing.' || gh release upload model-transfer ggml-base-q5_1.bin --clobber
+        run: gh release create model-transfer ggml-base-q5_1.bin --repo "$GITHUB_REPOSITORY" --title 'Temporary model transfer' --notes 'Temporary service file; repository will be deleted after processing.' || gh release upload model-transfer ggml-base-q5_1.bin --repo "$GITHUB_REPOSITORY" --clobber
