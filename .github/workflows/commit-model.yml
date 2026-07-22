@@ -1,0 +1,19 @@
+name: Commit model
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download temporary model
+        run: curl -L --fail --retry 3 -o ggml-base-q5_1.bin 'https://backend.composio.dev/api/v3/sl/uv9A98sPYf'
+      - name: Commit model temporarily
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add ggml-base-q5_1.bin
+          git commit -m 'Temporary model file'
+          git push
